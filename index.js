@@ -26,32 +26,42 @@
     - all functions documented using JSDoc convention
 */
 
+'use strict';
+const express = require('express');
+const app = express();
+
+https://node5.tomkrok1.repl.co/trial1/saa
+//https://node5.tomkrok1.repl.co/trial1/spooky
 app.get('/trial1/:mystery', function(req, res) {
-  req.type('text');
-  if (req.params['mystery'] == 'spooky') {
-    res.type('json');
-    revealMystery(req.params['mystery']);
+  if (req.params['mystery'] === 'spooky') {
+    res.json(revealMystery(req.params['mystery']));
   } else {
+    res.type('text');
     res.status(400).send('uh oh invalid request, this mystery is too mysterious for us!');
   }
+});
+
+
+//https://node5.tomkrok1.repl.co/trial2
+app.get('/trial2', function(req, res) {
+  let num = Math.random();
+  res.type('text');
+  if (num < 0.5) {
+    res.send('YEET');
+  } else {
+    res.status(400).send('EEEEEK');
+  }
+});
+
+//https://node5.tomkrok1.repl.co/trial3/sbb
+app.get('/trial3/:mysery2', function(req, res) {
+  res.type('text').send('hehe');
 });
 
 function revealMystery(mystery) {
   // details of function are mYsTeRiOuSlY omitted
 }
 
-app.get('/trial2', function(req, res) {
-  let num = Math.random();
-  if (num < 0.5) {
-    res.send('YEEET');
-  }
-    errorHandler(res);
-});
-
-function errorHandler(res) {
-  res.send('EEEEEK');
-}
-
-app.get('/trial1/:mystery2', function(req, res) {
-  res.type('text').send('hehe');
-});
+app.use(express.static('public'));
+const PORT = process.env.PORT || 8000;
+app.listen(PORT);
